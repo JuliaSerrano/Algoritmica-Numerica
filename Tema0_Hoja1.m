@@ -42,7 +42,7 @@ r = (-1 + (1 - (-1)).*rand(5,1))';      %5 números aleatorios uniformemente dis
 %C Acceder a un dato o conjunto de datos de una matriz o vector
 
     %1.
-A=[1 2 3 4;5 6 7 8;9 10 11 12]
+A=[1 2 3 4;5 6 7 8;9 10 11 12];
 
 
 %Extraer la tercera fila, almacenar en B
@@ -68,7 +68,7 @@ C = [A(end,[4 3]);A(2,[4 3]);A(1,[4 3])];    %Obtener la matriz C=[12 11;8 7;4 3
 [n,m] = size(A);     %dimensiones de A
 
     %2.
-x = [2 4 7 5 9 3]
+x = [2 4 7 5 9 3];
 
 
 y = x(x>4);     %extraer elementos > 4
@@ -82,6 +82,10 @@ x(x<=4) = 0;     %poner a 0 elementos <= 4
 x = [2 4 7 5 9 3];
 y = (x>5); 
 x(y)=x(y) + 2;
+
+%opcion 1.1
+x = [2 4 7 5 9 3];
+x(x>5) = x(x>5)+2;
 
 %opcion 2
 x = [2 4 7 5 9 3];
@@ -134,20 +138,70 @@ mean(aprobados);
 notas(notas>= 5.5 & notas<5) = 5;
     
     
+%D.Operaciones básicas con vectores y matrices.
+
+    %1.
+x=[0:3:30];
+
+%sumar 3 a todos los elementos
+x = x + 3;
+
+%Sumar 1 a los elementos con índice par
+x(2:2:end)=x(2:2:end)+1;
+
+%Poner a cero los elementos de x con índice impar.
+x(1:2:end) = 0;
     
+%Vector d con la diferencia entre elementos consecutivos de x.
+x=[0:3:30];
+[n,m] = size(x);
+d = zeros(1,m-1);
+for i = 1:m-1
+    d(i) = x(i+1) - x(i);
+end
+d;
+
+%*5 todos los elementos de x
+x = x.*5;
+
+%Cambiar el signo a los elementos de x con índice impar.
+x(1:2:end) = -x(1:2:end);
     
+    %2.
+x = [0:pi/2:2*pi];
+y = sin(x);
+y = exp(x);
     
+    %3.
+x=[1 2 3 4];
+y=[5 6 7 8];
+
+%concatenar 1x8
+A = [x y];
+
+%2x4
+A = [x;y];
+
+%4x2
+A = [x(1,1) y(1,1); x(1,2) y(1,2); x(1,3) y(1,3); x(1,4) y(1,4)]; 
+
+A = zeros(4,2); 
+for i = 1:4
+    A(i,1) = x(1,i);
+    A(i,2) = y(1,i);
+end
+A;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    %4.
+
+A = randn(5,7);
+%media cada columna
+y = mean(A)
+
+%media cada fila
+z = mean(A')
+
+
     
 
