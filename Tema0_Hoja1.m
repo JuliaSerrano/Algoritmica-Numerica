@@ -128,7 +128,7 @@ notas = 6 + 1.2*randn(1,70);
 med = mean(notas);
     
 %nota max
-mx = max(notas);
+nota_mx = max(notas);
     
 %media de los aprobados
 aprobados = notas(notas >=5);
@@ -197,11 +197,76 @@ A;
 
 A = randn(5,7);
 %media cada columna
-y = mean(A)
+y = mean(A);
 
 %media cada fila
-z = mean(A')
+z = mean(A');
+
+%media de todos los elementos
+m = mean(A(:));
+
+%elemento max de cada columna
+max_c = max(A);
+
+%elemento max de A
+max_el = max(A(:));
+
+%dispersion
+dis = max(A) - min(A);          %dispersion cada columna
+[n,m] = size(dis);              %dimension
+dis_total = max(A(:)) - min(A(:));  %dispersion total
+dis_fila = max(A') - min(A');    %disperion por fila
 
 
-    
+%E. Operaciones de álgebra lineal con vectores y matrices
+
+A=[1 2; -1 1];       %2x2
+B = [-1 0; 0 1];
+x=[2 3];             %1x2
+y =[-1 1];           %1x2
+
+%matriz * matriz
+A * B;
+
+%matriz * vector
+A * x';
+
+%Producto escalar x e y
+prod_esc = x * y';
+
+
+%Comprobar prop. conmutativa del prod de matrices
+if(isequal(A*B,B*A))
+    fprintf('Multiplicacion es conmutativa\n')
+   
+else
+%     fprintf('Multiplicacion no es conmutativa\n')
+end
+
+%comprobar equivalencias 
+C = A*A*A*A;
+C_1 = A^4;
+C_2 = A.^4;
+
+if(isequal(C,C_1))
+%     fprintf('C = A*A*A*A == A^4\n')
+elseif(isequal(C,C_2))
+    fprintf('C = A*A*A*A == A.^4\n')
+end
+
+
+%F. Operaciones punto a punto con vectores
+
+x=[1 2 3 4]; 
+y=[5 6 7 8];
+
+%multiplicacion elemento a elemento
+x .* y;
+
+
+
+
+
+
+
 
