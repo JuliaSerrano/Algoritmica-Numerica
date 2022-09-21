@@ -1,3 +1,5 @@
+clear;
+clc;
 %A Creacion de vectores y matrices
 
 x = [1:10];             %vector fila numeros del 1 al 10
@@ -9,6 +11,8 @@ z = [2:2:20]';          %Vector columna con los números pares de 2 a 20
 a = [7:7:70];           %Vector fila con los números de la tabla del 7
 
 x = [0:0.01:(2*pi)];    %Vector desde 0 a (2*pi) a saltos de 0.01.
+
+las_el = x(length(x));  %ultimo elemento de x
 
 length(x);              %numero de elementos de x 
 
@@ -30,8 +34,8 @@ x = linspace(0,sqrt(3),101);     %101 elementos (equiespaciados) desde 0 a sqrt(
 x = zeros(3,4);      %matriz 3x4 de ceros (3 filas, 4 columnas)
 
 
-x = zeros(3,6);     %matriz 3x6 
-x + 7;              %sumar a todos los elemntos 7
+x = zeros(3,6) + 7;  %matriz 3x6 sumar a todos los elementos 7
+
 
 x = rand(1,5);      %5 números aleatorios uniformemente distribuidos, entre (0,1)
 
@@ -53,7 +57,7 @@ B = A(3,:);          %de la 3a fila coger todas las columnas
 
 B = A([1,3],:);      %La primera y la tercera filas de A
 
-B = A(:,4);          %La última columna de A.
+B = A(:,end);          %La última columna de A.
 
 B = A(1:2:3,4);      %Elementos de índice impar ultima columna
 
@@ -131,8 +135,7 @@ med = mean(notas);
 nota_mx = max(notas);
     
 %media de los aprobados
-aprobados = notas(notas >=5);
-mean(aprobados);
+media_aprobados = mean(notas(notas >=5));
     
 %aprobar a aquellos que nota>= 4.5 & nota<5
 notas(notas>= 5.5 & notas<5) = 5;
@@ -256,12 +259,167 @@ end
 
 
 %F. Operaciones punto a punto con vectores
-
+    %1.
 x=[1 2 3 4]; 
 y=[5 6 7 8];
 
 %multiplicacion elemento a elemento
 x .* y;
+
+%dividir el a el
+x ./ y;
+
+%elevar ^2 cada elem de x
+x .^ 2;
+
+%reciproco de cada elemento
+z = 1 ./ x;
+
+%elevar cada ele de x por el correspondiente de y
+x .^ y;
+
+%obtener [1 4 27 256] a partir de x
+x .^ x;
+
+    %2.
+%vector x con las fracciones 1/1, 1/2 ,... 1/10
+x = 1 ./ [1:10];
+
+    %3.
+%Vector x con los primeros 11 números de la serie: 0, 1/2, 2/3, 3/4, ... ( 0/1, 1/2, 2/3, 3/4, ...).
+
+x = [0:10] ./ [1:11];
+
+n = [0:10];
+x = n ./ (n+1);
+
+    %4.
+%Vecor x con los términos de la sucesión (-1)^n con n= 0, ..., 10
+n = [0:10];
+x = (-1).^ n;
+
+    %5.
+%Vector c con los cuadrados de los números enteros del 0 al 10
+    
+c = [0:10] .^ 2;
+
+%Con un solo comando, crear el vector dif conteniendo la diferencia entre cuadrados consecutivos del
+%apartado anterior (1^2-0^2, 2^2-1^2, 3^2-2^2,..., 10^2-9^2).
+
+dif = c(2:end) - c(1:end-1);
+
+
+
+    %6.
+    
+%vector con elementos sucesion
+n = [0:100];
+D = (-1) .^ n;      %Dividendo
+d = (2 .*n) + 1;    %Divisor
+
+x = D ./ d;          %vector sucesion
+
+
+%Sumar los números de la sucesión del apartado anterior y llamar vap.
+vap = sum(x);       %valor aprox de pi/4 con 100 terminos(n)
+
+
+%Serie valores aproximados a pi/4 (misma formula de la sucesion)
+n = [0:10000];
+D = (-1) .^ n;      %Dividendo
+d = (2 .*n) + 1;    %Divisor
+
+x = D ./ d;
+ 
+vap2 = sum(x);      %Valor aprox de pi/4 con 10.000 terminos(n)      
+
+
+%Calculo de errores para ver cual es mejor aproximacion
+error1 = abs(vap - (pi/4));
+error2 = abs(vap2 - (pi/4));
+    %error1 > error2 porque se ha hecho con menos terminos
+    %segunda aprox mejor
+
+if error1 > error2
+    %fprintf('vap peor aprox que vap2')
+else
+    fprintf('vap2 peor aprox que vap')
+end
+
+    %7.
+n = [0:10];
+
+%2^0 , 2^1 , 2^2 ,..., 2^10
+a = 2 .^ n;
+
+%Construir el vector s con los elementos inversos del vector a.
+s = 1 ./ a;
+
+n = [0:10];
+D = 1;
+d = 2 .^ n;
+
+x = D ./ d;
+
+vaprox1 = sum(x);
+
+%error en la aproximacion
+error1=abs(vaprox1-2);
+
+
+%con 10000 terminos
+n = [0:9999];
+D = 1;
+d = 2 .^ n;
+
+x = D ./ d;
+
+aprox2 = sum(x);
+error2 =abs(aprox2-2);
+
+if error1 > error2
+%     fprintf('error1: %d \n',error1)
+%     fprintf('error2: %d \n',error2)
+%     fprintf('vaprox1 peor aprox que aprox2, error1 > error2 \n')
+else
+    fprintf('error1: %d \n',error1)
+    fprintf('error2: %d \n',error2)
+    fprintf('vaprox1 mejor aprox que aprox2, error2 > error1 \n')
+end
+
+
+%G. Graficas en MATLAB
+x = [0:0.01:pi];            %conjunto de puntos en intervalo dado
+
+f1 = sin(3 *x + x.^ 2);     %evaluar f1 en los puntos del vector
+f2 = sqrt(abs(sin(1+x) ./ (1+x)));      %evaluar f2
+
+%pintar graficas
+%plot(x,f1,'b',x,f2,'r')
+
+    %2.
+x = [10:0.1:50];
+
+f1 = exp(-x);
+f30 = exp(-30);
+% subplot(1,2,1)
+%semilogy(x,f1,'r')
+
+    %3.
+n = 1:0.01:1000;
+vap = (1 + (1 ./ n)) .^ n;
+
+
+%valor ultimo termino sucesion
+ultimo = vap(end)
+%error
+error=abs(vap-exp(1));
+
+%grafica
+plot(n,error,'*r')
+
+%escala logaritmica en eje y
+semilogy(n,error,'*r')
 
 
 
