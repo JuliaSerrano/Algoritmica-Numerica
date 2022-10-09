@@ -129,15 +129,151 @@ er_rel = er_abs ./ g;
 ncif = floor(-log10(er_rel));
 
 %graficas
-subplot(1,2,1),loglog(x,er_rel,'*r'),title('Error relativo respecto de x')
-subplot(1,2,2),semilogx(x,ncif,'*g'),title('Cifras significativas respecto de x')
+% subplot(1,2,1),loglog(x,er_rel,'*r'),title('Error relativo respecto de x')
+% subplot(1,2,2),semilogx(x,ncif,'*g'),title('Cifras significativas respecto de x')
 
 
 
     %Ejercicio 2
+%overflow  (1023)
+k = 1;
+while(2 ^ k < inf)
+    k = k+1;
+end
+over = k-1;
+
+%underflow (1074)
+k = 1;
+while(2^(-k)~=0)
+    k = k+1;
+end
+under = k-1;
 
 
+%epsilon  (52)
+k = 1;
+while(1+(2^(-k))~=1)
+    k = k+1;
+end
+epsil = k-1;
+
+
+    %Ejercicio 3 (Julio 2016)
+%comparar resultados de log1p(x) y log(1+x)
+% utilizando log1p(x) como vex y log(1+x) como aprox
+% valores pequeños
+x = 10.^-[1:16];
+
+vex = log1p(x);
+vaprox = log(1+x);
+
+er_abs = abs(vex - vaprox);
+er_rel = er_abs ./ vex;
+ncif = floor(-log10(er_rel));
+
+%graficas
+% subplot(1,2,1),loglog(x,er_rel,'*r'),title('Error relativo respecto de x')
+% subplot(1,2,2),semilogx(x,ncif,'*g'),title('Cifras significativas respecto de x')
+
+
+a = 10 ^ -8;
+n = [1:100];
+f = ((-1).^(n+1) .* a.^n) ./ n;
+fa = sum(f);
+
+vexa = log1p(a);
+vaproxa = log(1 + a);
+
+% fprintf('Serie d: %10e log1p(a): %10e  log(1+a): %10e\n',[fa;vexa;vaproxa])
+
+    %Ejercicio 4 (Julio 2017)
+%evaluar funciones para valores cercanos a 0
+n = [1:8];
+h=10.^-n;
+
+%evaluar
+vaprox = (cosh(1+h) - 2*cosh(1) + cosh(1-h)) ./ (h.^2);
+vex = cosh(1);
+
+%error
+er_abs = abs(vex - vaprox);
+er_rel = er_abs ./ vex;
+
+
+%grafica
+% loglog(n,er_rel,'r*'), title('Error relativo respecto de n') 
     
+%cifras
+ncif =  floor(-log10(er_rel));
+% semilogx(h,ncif,'*g'),title('Cifras significativas respecto de h')
+
+%Para que valor de h se consiguen 8 cif.
+% fprintf('h: %2e n_cifras:%2d \n',[h;ncif])
+
+
+
+    %Ejercicio 5
+
+n = [0:10];     %11 sumandos
+m = (-1).^n;    %pares +, impares -
+vex = exp(-1);  %valor exacto
+vaprox = sum((1 ./ factorial(n)) .* m); %valor aproximado
+
+%error
+er_abs = abs(vex - vaprox);     %error absoluto
+er_rel = er_abs ./ vex;         %error relativo
+ncif = floor(-log10(er_rel));   %cifras signif.
+
+n = 5;
+Erel = inversoe(5);
+while(Erel > 1e-15)     
+    [Valor,Erel,Ncif] = inversoe(n);
+%     fprintf('n: %2d n_cifras:%2d \n',[n;Ncif])
+    n = n+5;
+end
+
+
+    %Ejercicio 7
+n = [0:20];
+x = 10 .^ -n;
+
+v_exact = sinh(x);
+v_aprox = (exp(x) - exp(-x)) ./ 2;
+
+%el valor exacto y el valor aproximado son identicos
+% hold on
+% plot(v_exact,'bo')
+% plot(v_aprox,'r*')
+% hold off
+
+%estudio error
+eabs=abs(v_exact-v_aprox);
+erel = eabs ./ v_exact;
+ncif = floor(-log10(erel));
+% whos eabs
+% whos erel
+% whos ncif
+
+%graficas
+% subplot(1,2,1),loglog(x,erel,'bo-'),title('Error relativo respecto de x')
+% subplot(1,2,2),semilogx(x,ncif,'r*'),title('Cifras significativas respecto de x')
+
+
+%print
+a = [x;erel;ncif];
+% fprintf('n: %2d error rel: %0.2e no cifras: %2d \n', a)
+
+%cota
+cota = eps(1) ./ sinh(x);
+
+loglog(x,erel,'bo-',x,cota,'ro-')
+legend('sinh(x) azul','(exp(x) - exp(-x)) ./ 2') 
+title('Gráfica error relativo con cota')
+
+
+
+
+
 
 
 
