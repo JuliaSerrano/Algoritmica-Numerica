@@ -49,7 +49,7 @@ b = yi - xi;
 c = H\b;
    
     %Ejercicio 4
-
+%1.)
 %vector columna de los valores x donde se va a interpolar
 xi = [1 3 5]';
 %vector columna de los valores de la función sobre los nodos
@@ -66,27 +66,42 @@ yy=c1(1) *xx.^0  + c1(2)*xx.^1 + c1(3)*xx.^2;
 fx = 2*sinh(xx);
 %error interpolacion
 er_int = abs(fx - yy);
-subplot(1,2,1)
-plot(xx,fx,'g',xx,yy,'r',xi,yi,'*r')
-title('Función original y polinomio interpolador')
-subplot(1,2,2)
-plot(xx,er_int)
-title('Error de interpolación')
+% subplot(1,2,1)
+% plot(xx,fx,'g',xx,yy,'r',xi,yi,'*r')
+% title('Función original y polinomio interpolador')
+% subplot(1,2,2)
+% plot(xx,er_int)
+% title('Error de interpolación')
 
 %maximo error
-max_er = max(er_int);
+[max_er,p] = max(er_int);
 %minimo error y posicion
+[min_er,p] = min(er_int);
 [n,m] = size(er_int);
 
 for i= 1:m
     if er_int(i) == 0
-        fprintf('i: %d\n',i)
+%         fprintf('i: %d\n',i)
     end
 end
 
 %1.3. ??
 
-    
+%2.)
+%vector columna de los valores x donde se va a interpolar
+xi = [1 5]';
+%vector columna de los valores de la función sobre los nodos
+yi = 2*sin(xi);
+%matriz de coeficientes
+H2 = [xi.^0 (xi - 1).^2];
+%término independiente
+b2 = yi;
+%vector de incógnitas/coeficientes
+c2 = H2\b2
+
+
+
+
     
     
     
