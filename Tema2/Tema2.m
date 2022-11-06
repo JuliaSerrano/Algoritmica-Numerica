@@ -97,7 +97,7 @@ H2 = [xi.^0 (xi - 1).^2];
 %término independiente
 b2 = yi;
 %vector de incógnitas/coeficientes
-c2 = H2\b2
+c2 = H2\b2;
 
 
 
