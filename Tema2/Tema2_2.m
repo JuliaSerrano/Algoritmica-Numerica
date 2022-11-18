@@ -75,7 +75,7 @@ for i = 1:l
 end
 
 c_inv = c(end:-1:1);
-pp = polyval(c_inv,xx)
+pp = polyval(c_inv,xx);
 
 error = zeros(4*length(xx));
 
